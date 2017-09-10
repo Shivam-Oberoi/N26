@@ -55,11 +55,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 			throw new RequestValidationException(APIErrors.VALIDATION_EMPTY_REQUEST_BODY);
 		}
 
-		if (!Optional.ofNullable(transaction.getAmount()).isPresent()) {
+		else if (!Optional.ofNullable(transaction.getAmount()).isPresent()) {
 			throw new RequestValidationException(APIErrors.VALIDATION_MISSING_AMOUNT);
 		}
 
-		if ((System.currentTimeMillis() - transaction.getTimestamp()) / 1000 < DURATION_STATS) {
+		else if ((System.currentTimeMillis() - transaction.getTimestamp()) / 1000 < DURATION_STATS) {
 			int second = LocalDateTime
 					.ofInstant(Instant.ofEpochMilli(transaction.getTimestamp()), ZoneId.systemDefault()).getSecond();
 			oneMinuteStatistics.compute(second, (k, v) -> {
