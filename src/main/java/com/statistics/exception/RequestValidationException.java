@@ -15,7 +15,6 @@ public class RequestValidationException extends RuntimeException {
 
 	public RequestValidationException() {
 		super(APIErrors.VALIDATION.message());
-
 		this.errorMessage = APIErrors.VALIDATION.message();
 	}
 

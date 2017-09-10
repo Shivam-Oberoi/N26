@@ -34,19 +34,15 @@ public class TransactionController {
 	private TransactionService transactionService;
 
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Void> addTransaction(@RequestBody Transaction transaction) {
-		Optional<Long> optionalTime = Optional.ofNullable(transaction.getTimestamp());
-		if (!optionalTime.isPresent()){
+		if (!Optional.ofNullable(transaction.getTimestamp()).isPresent()) {
 			throw new RequestValidationException(APIErrors.VALIDATION_MISSING_TIMESTAMP);
-		}
-		else if ((System.currentTimeMillis() - transaction.getTimestamp()) / 1000 > TIME_LIMIT) {
+		} else if ((System.currentTimeMillis() - transaction.getTimestamp()) / 1000 > TIME_LIMIT) {
 			// if transaction did not happened within the last minute
 			return new ResponseEntity<>(NO_CONTENT);
 		} else {
 			transactionService.addTransaction(transaction);
 			return new ResponseEntity<>(CREATED);
 		}
-
 	}
 }

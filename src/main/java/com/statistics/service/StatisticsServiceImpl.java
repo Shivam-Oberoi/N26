@@ -55,9 +55,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 			throw new RequestValidationException(APIErrors.VALIDATION_EMPTY_REQUEST_BODY);
 		}
 
-		Optional<Double> optionalAmount = Optional.ofNullable(transaction.getAmount());
-
-		if (!optionalAmount.isPresent()) {
+		if (!Optional.ofNullable(transaction.getAmount()).isPresent()) {
 			throw new RequestValidationException(APIErrors.VALIDATION_MISSING_AMOUNT);
 		}
 
